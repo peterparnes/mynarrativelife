@@ -43,7 +43,7 @@ function updateMoments(data) {
     for(var i = 0; i < data.results.length; i++) { // XXX
         // for(var i = 0; i < 1; i++) {
         moment = data.results[i];
-        $("#life").append("<P>Moment: " + "<BR>");
+        $("#life").append("<P>Moment (" + moment.photo_count + " photos) : " + "<BR>");
         var tmpdiv = "momentphotos" + i;
         $("#life").append("<img onclick=getMoment(" + true + ",'" + moment.photos_url + "'," + tmpdiv + ") src=" + moment.keyframe.renders.smartphone.url + "></a>" +
                           "<div id='" + tmpdiv + "'></p>");
@@ -82,7 +82,7 @@ function updateMoment(first, data, divholder) {
     }
     for(var i = 0; i < data.results.length; i++) {
         photo = data.results[i];
-        $(divholder).append("<a class=fancybox href=\"" + photo.renders["g1.hd"].url + "\" data-fancybox-group=gallery title=><img src=" + photo.renders.g1_thumb_square.url + "></a>&nbsp");
+        $(divholder).append("<a class=fancybox title=\"Quality Score: " + photo.quality_score + "\" href=\"" + photo.renders["g1.hd"].url + "\" data-fancybox-group=gallery title=><img src=" + photo.renders.g1_thumb_square.url + "></a>&nbsp");
         $("#" + downloadallDivId).append("<a href='" + photo.renders["g1.hd"].url + "' download=\"" + getDownloadName(photo.taken_at_local) + "\">");
     }
     if(data.next) {

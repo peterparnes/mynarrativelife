@@ -39,11 +39,23 @@ function getMoment(first, url, divid) {
     });
 }
 
+function getTime(date, includeSeconds) {
+    var time = date.split("T")[1].split("+")[0];
+    if(!includeSeconds) {
+        parts = time.split(":");
+        console.log(parts);
+        time = "" + parts[0] + ":" + parts[1];
+    } 
+    return time;
+}
+
 function updateMoments(data) {
     for(var i = 0; i < data.results.length; i++) { // XXX
         // for(var i = 0; i < 1; i++) {
         moment = data.results[i];
-        $("#life").append("<P>Moment: " + "<BR>");
+        $("#life").append(getTime(moment.start_timestamp_local, false) + " - " + getTime(moment.end_timestamp_local, false) + ", ");
+        $("#life").append("Photos: " + moment.photo_count + "<BR>");
+
         var tmpdiv = "momentphotos" + i;
         $("#life").append("<img onclick=getMoment(" + true + ",'" + moment.photos_url + "'," + tmpdiv + ") src=" + moment.keyframe.renders.smartphone.url + "></a>" +
                           "<div id='" + tmpdiv + "'></p>");

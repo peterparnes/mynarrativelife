@@ -43,7 +43,6 @@ function getTime(date, includeSeconds) {
     var time = date.split("T")[1].split("+")[0];
     if(!includeSeconds) {
         parts = time.split(":");
-        console.log(parts);
         time = "" + parts[0] + ":" + parts[1];
     } 
     return time;
@@ -94,7 +93,7 @@ function updateMoment(first, data, divholder) {
     }
     for(var i = 0; i < data.results.length; i++) {
         photo = data.results[i];
-        $(divholder).append("<a class=fancybox title=\"Quality Score: " + photo.quality_score + "\" href=\"" + photo.renders["g1.hd"].url + "\" data-fancybox-group=gallery><img src=" + photo.renders.thumb.url + "></a>&nbsp");
+        $(divholder).append("<a class=fancybox title=\"Quality Score: " + photo.quality_score + "\" href=\"" + photo.renders["g1.hd"].url + "\" data-fancybox-group=gallery><img src=" + photo.renders["g1.thumb-square"].url + "></a>&nbsp");
         $("#" + downloadallDivId).append("<a href='" + photo.renders["g1.hd"].url + "' download=\"" + getDownloadName(photo.taken_at_local) + "\">");
     }
     if(data.next) {

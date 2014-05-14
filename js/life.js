@@ -1,12 +1,12 @@
-// Life.js 
-// by Peter Parnes 
-// Contact: peter@parnes.com 
-// Copyright Peter Parnes 
+// Life.js
+// by Peter Parnes
+// Contact: peter@parnes.com
+// Copyright Peter Parnes
 // Created: 2014-01-10
 
 function getLife() {
     $.ajax({
-        url: "https://narrativeapp.com/api/v2/moments/?limit=20", 
+        url: "https://narrativeapp.com/api/v2/moments/?limit=20",
         beforeSend: function (request)
         {
             // request.setRequestHeader("Authorization:", "Bearer 1234");
@@ -39,20 +39,25 @@ function getMoment(first, url, divid) {
     });
 }
 
-function getTime(date, includeSeconds) {
-    var time = date.split("T")[1].split("+")[0];
+function getTime(datetime, includeSeconds) {
+    var time = datetime.split("T")[1].split("+")[0];
     if(!includeSeconds) {
         parts = time.split(":");
         time = "" + parts[0] + ":" + parts[1];
-    } 
+    }
     return time;
+}
+
+function getDate(datetime) {
+    var date = datetime.split("T")[0];
+    return date;
 }
 
 function updateMoments(data) {
     for(var i = 0; i < data.results.length; i++) { // XXX
         // for(var i = 0; i < 1; i++) {
         moment = data.results[i];
-        $("#life").append(getTime(moment.start_timestamp_local, false) + " - " + getTime(moment.end_timestamp_local, false) + ", ");
+        $("#life").append(getDate(moment.start_timestamp_local) + " " + getTime(moment.start_timestamp_local, false) + " - " + getTime(moment.end_timestamp_local, false) + ", ");
         $("#life").append("Photos: " + moment.photo_count + "<BR>");
 
         var tmpdiv = "momentphotos" + i;
@@ -74,19 +79,19 @@ function downloadAll(divholder) {
             "bubbles": true,
             "cancelable": true
         });
-        
+
         document.body.appendChild(link);
         link.dispatchEvent(evt);
         document.body.removeChild(link);
-        
+
     });
 }
 
 function updateMoment(first, data, divholder) {
     // console.log("updateMoment ");
-    
+
     downloadallDivId = divholder.id + "download";
-    
+
     if(first) {
         $(divholder).append("<a onclick=\"downloadAll(" + downloadallDivId + ")\">Download all</a>");
         $(divholder).append("<div id='" + downloadallDivId + "'></div>");
